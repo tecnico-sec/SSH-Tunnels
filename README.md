@@ -7,12 +7,13 @@ Instituto Superior Técnico, Universidade de Lisboa
 
 <!-- omit in toc -->
 ## Goals
-- Learn the fundamentals of the SSH protocol and some of its basic and lab relevant usage, namely, key generation, remote shell access and tunneling (aka port forwarding).
+- Learn the fundamentals of the SSH protocol and some of its basic and Lab relevant usage, namely, key generation, remote shell access and tunneling (aka port forwarding).
 - Perform a Man-in-the-Middle (MitM) attack in a simulated setting to demonstrate the security vulnerabilities of the Telnet protocol.
 - Create an SSH tunnel and reroute the Telnet traffic through it to demonstrate the security provided by SSH.
 
 <!-- omit in toc -->
 ## Index
+- [Introduction](#introduction)
 - [What is SSH?](#what-is-ssh)
 - [SSH in practice](#ssh-in-practice)
   - [Generating Authentication Keys](#generating-authentication-keys)
@@ -26,6 +27,14 @@ Instituto Superior Técnico, Universidade de Lisboa
 - [Man-in-the-Middle (MitM) attack / ARP poisoning](#man-in-the-middle-mitm-attack--arp-poisoning)
 - [Telnet - No SSH tunnel](#telnet---no-ssh-tunnel)
 - [Telnet - SSH tunnel](#telnet---ssh-tunnel)
+- [Conclusions](#conclusions)
+
+## Introduction
+In the digital age, where cyber threats loom at every corner of the network, understanding the principles of secure communication is crucial. As we delve into the world of network protocols, two names often come up: SSH (Secure Shell) and Telnet. Both serve the purpose of providing remote access to servers, yet they differ fundamentally in their approach to security.
+
+Telnet, one of the earliest remote login protocols, lacks the necessary mechanisms to protect data from eavesdroppers on the network. SSH, on the other hand, was designed with security at its core, providing a robust suite of features that ensure confidentiality, integrity, and authentication.
+
+This lab guide is an exploration into the stark differences between these two protocols. Through hands-on exercises, we will witness firsthand how Telnet's vulnerabilities lay open the secrets of a network and how SSH can shield and secure those same communications.
 
 ## What is SSH?
 [Secure Shell (SSH)](https://en.wikipedia.org/wiki/Secure_Shell) is a cryptographic network protocol for securely operating network services over an unsecured network. SSH provides a secure channel over an unsecured network in a client-server architecture, connecting an SSH client application with an SSH server. Currently, the most popular SSH implementation is [OpenSSH](https://www.openssh.com) which is the one we are going to use in this tutorial.
@@ -259,6 +268,13 @@ telnet 192.168.64.4
 ```
 
 Capture the packets, filter them using the `telnet` filter and check that once again, you can visualize packets containing the username and password in plain text.
+
+## Conclusions
+Telnet, an older protocol used for accessing remote servers, operates in plaintext. This means that all data, including sensitive information like usernames and passwords, are transmitted over the network without any form of encryption. This lab vividly demonstrated how a Man-in-the-Middle (MitM) attack could exploit this vulnerability to capture credentials and compromise network communication.
+
+SSH provides a secure alternative to Telnet by introducing three critical features: encryption, authentication, and integrity. Through SSH tunneling, we can create secure pathways for insecure protocols like Telnet, effectively encrypting data that was previously transmitted in plaintext.
+
+In a learning setting, implementing these security mechanisms from scratch is a valuable educational exercise, allowing students to understand the mechanics of network security at a granular level. However, in real-world applications, it would be impractical and risky to attempt to replicate what well-established protocols like SSH already provide. SSH is not only secure but also widely tested and trusted in production environments.
 
 ---
 
