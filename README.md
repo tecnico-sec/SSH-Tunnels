@@ -24,12 +24,12 @@ Instituto Superior Técnico, Universidade de Lisboa
     - [Local Port Forwarding](#local-port-forwarding)
     - [Remote Port Forwarding](#remote-port-forwarding)
 - [Lab setup](#lab-setup)
-  - [Setting the Telnet client](#setting-the-telnet-client)
-  - [Setting the Telnet server](#setting-the-telnet-server)
-- [Man-in-the-Middle (MitM) attack / ARP poisoning](#man-in-the-middle-mitm-attack--arp-poisoning)
-- [Telnet - No SSH tunnel](#telnet---no-ssh-tunnel)
-- [Telnet - SSH tunnel](#telnet---ssh-tunnel)
-- [Conclusions](#conclusions)
+  - [Setup of the Telnet client](#setup-of-the-telnet-client)
+  - [Setup of the Telnet server](#setup-of--the-telnet-server)
+- [Adversary-in-the-Middle (AitM) attack / ARP poisoning](#adversary-in-the-middle-AitM-attack--arp-poisoning)
+- [Telnet without protection](#telnet-without-protecion)
+- [Telnet protected with SSH](#telnet-protected-with-SSH)
+- [Conclusion](#conclusion)
 
 ## Introduction
 
