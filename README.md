@@ -268,7 +268,7 @@ Thu Nov 1 13:08:02 2023 ［550028］
 Next, stop ettercap on the AitM VM, verify IP Forwarding is still on and run ettercap now with the -o flag set.
 
 ```sh
-sudo ettercap -T -o -M arp:remote /<target_ip_1>// /<target_ip_2>//`
+sudo ettercap -T -o -M arp:remote /<target_ip_1>// /<target_ip_2>//
 ```
 
 Open [Wireshark](https://en.wikipedia.org/wiki/Wireshark) on the AitM VM and start sniffing packets on the correct network interface.
