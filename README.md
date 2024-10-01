@@ -195,6 +195,23 @@ Finally, restart the server.
 sudo service xinetd restart
 ```
 
+Make sure the service is now running by checking its status (if it's active) with `service xinetd status`
+
+```txt
+● xinetd.service - Xinetd A Powerful Replacement For Inetd
+     Loaded: loaded (/usr/lib/systemd/system/xinetd.service; disabled; pre>
+     Active: active (running) since Tue 2024-10-01 17:58:14 WEST; 1s ago
+ [...]
+```
+
+If the service isn't running and you get any errors regarding the Telnet server executable like the following,
+
+```txt
+Sep 30 11:23:36 kali xinetd[5822]: Server /usr/sbin/in.telnetd is not executable [file=/etc/xinetd.d/telnet] [line=8]
+```
+
+Make sure the telnetd executable path is correct (i.e. change the config file to have `server          = /usr/sbin/telnetd` if your executable is at `/usr/sbin/telnetd`).
+
 ## Adversary-in-the-Middle (AitM) attack / ARP poisoning
 
 On the AitM VM we start by scanning the network to find the IPs of the machines in it.
@@ -247,6 +264,12 @@ Thu Nov 1 13:08:02 2023 ［550028］
 ```
 
 ## Telnet without protection
+
+Next, stop ettercap on the AitM VM, verify IP Forwarding is still on and run ettercap now with the -o flag set.
+
+```sh
+sudo ettercap -T -o -M arp:remote /<target_ip_1>// /<target_ip_2>//`
+```
 
 Open [Wireshark](https://en.wikipedia.org/wiki/Wireshark) on the AitM VM and start sniffing packets on the correct network interface.
 If you are using Kali Linux, it should be something like `eth0`.
