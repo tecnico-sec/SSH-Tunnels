@@ -165,12 +165,14 @@ All VMs are set to the network mode _"shared network"_, where traffic is routed 
 ### Setup of the Telnet client
 
 ```sh
+sudo apt update
 sudo apt install telnet
 ```
 
 ### Setup of the Telnet server
 
 ```sh
+sudo apt update
 sudo apt install xinetd telnetd
 ```
 
@@ -234,7 +236,7 @@ Once again, for simplicity purposes, we know that it is the IP `192.168.64.1` so
 
 ![netdiscover output](./images/netdiscover-output.png 'netdiscover output')
 
-Next, enable IP forwarding by running the following command:
+Next, enable IP forwarding by running the following command on the AitM VM:
 
 ```sh
 echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
@@ -246,7 +248,7 @@ Now we are ready to use [Ettercap](https://en.wikipedia.org/wiki/Ettercap_(softw
 # pseudo command
 sudo ettercap -T -M arp:remote /<target_ip_1>// /<target_ip_2>//
 
-# more specifically
+# more specifically, run the following command on the AitM VM
 sudo ettercap -T -M arp:remote /192.168.64.2// /192.168.64.4//
 ```
 
