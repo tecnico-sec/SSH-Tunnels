@@ -15,23 +15,23 @@ Instituto Superior Técnico, Universidade de Lisboa
 <!-- omit in toc -->
 ## Index
 
-- [Introduction](#introduction)
-- [What is SSH?](#what-is-ssh)
-- [SSH in practice](#ssh-in-practice)
-  - [Generating Authentication Keys](#generating-authentication-keys)
-  - [Accessing a Remote Shell](#accessing-a-remote-shell)
-  - [SSH Tunneling](#ssh-tunneling)
-    - [Local Port Forwarding](#local-port-forwarding)
-    - [Remote Port Forwarding](#remote-port-forwarding)
-- [Lab setup](#lab-setup)
-  - [Setup of the Telnet client](#setup-of-the-telnet-client)
-  - [Setup of the Telnet server](#setup-of--the-telnet-server)
-- [Adversary-in-the-Middle (AitM) attack / ARP poisoning](#adversary-in-the-middle-AitM-attack--arp-poisoning)
-- [Telnet without protection](#telnet-without-protecion)
-- [Telnet protected with SSH](#telnet-protected-with-SSH)
-- [Conclusion](#conclusion)
+- [1. Introduction](#1-introduction)
+- [2. What is SSH?](#2-what-is-ssh)
+- [3. SSH in practice](#3-ssh-in-practice)
+  - [3.1. Generating Authentication Keys](#31-generating-authentication-keys)
+  - [3.2. Accessing a Remote Shell](#32-accessing-a-remote-shell)
+  - [3.3. SSH Tunneling](#33-ssh-tunneling)
+    - [3.3.1. Local Port Forwarding](#331-local-port-forwarding)
+    - [3.3.2. Remote Port Forwarding](#332-remote-port-forwarding)
+- [4. Lab setup](#4-lab-setup)
+  - [4.1. Setup of the Telnet client](#41-setup-of-the-telnet-client)
+  - [4.2. Setup of the Telnet server](#42-setup-of-the-telnet-server)
+- [5. Adversary-in-the-Middle (AitM) attack / ARP poisoning](#5-adversary-in-the-middle-aitm-attack--arp-poisoning)
+- [6. Telnet without protection](#6-telnet-without-protection)
+- [7. Telnet protected with SSH](#7-telnet-protected-with-ssh)
+- [8. Conclusion](#8-conclusion)
 
-## Introduction
+## 1. Introduction
 
 In the digital age, where cyber threats loom at every corner of the network, it is crucial to understand the principles of secure communication.
 In regard to remote terminal protocols, two names come up: Telnet and SSH.
@@ -41,7 +41,7 @@ SSH (Secure SHell), on the other hand, was designed with security at its core, p
 
 This lab guide will explore the vulnerabilities of Telnet and show how SSH can shield and secure those same communications.
 
-## What is SSH?
+## 2. What is SSH?
 
 [Secure Shell (SSH)](https://en.wikipedia.org/wiki/Secure_Shell) is a cryptographic network protocol for securely operating network services.
 SSH provides a secure channel over an unsecured network in a client-server architecture, connecting an SSH client application with an SSH server.
@@ -56,9 +56,9 @@ SSH provides the following three fundamental features that protect against the s
 - **Authentication**: By using public/private key pairs, it ensures that you are connecting to the intended remote machine;
 - **Integrity**: Protects against data tampering during transmission.
 
-## SSH in practice
+## 3. SSH in practice
 
-### Generating Authentication Keys
+### 3.1. Generating Authentication Keys
 
 Passwords can be guessed, brute-forced, or even phished.
 SSH keys, which are essentially long sequences of characters representing large numbers, are much more secure.
@@ -87,7 +87,7 @@ The key fingerprint is:
 
 [Further reading](https://www.ssh.com/academy/ssh/keygen)
 
-### Accessing a Remote Shell
+### 3.2. Accessing a Remote Shell
 
 SSH provides a secure way to work on a remote server as if you were sitting right in front of it.
 Think of it as a secure version of the older `telnet` command.
@@ -106,14 +106,14 @@ For example, system administrators might need to access a server located in a da
 
 [Further reading](https://www.ssh.com/academy/ssh/command)
 
-### SSH Tunneling
+### 3.3. SSH Tunneling
 
 SSH Tunneling, also known as Port Forwarding, is a method to forward arbitrary network data using an encrypted SSH connection.
 This can be used to secure network traffic, by adding transparent encryption to legacy applications and unsecure protocols.
 It can also be used to bypass network restrictions, by tunneling non-SSH traffic through an SSH connection, effectively circumventing firewalls or geolocation-based access controls.
 This approach allows users to access services as if they are local, even if they are on a remote network or behind a firewall.
 
-#### Local Port Forwarding
+#### 3.3.1. Local Port Forwarding
 
 You are creating a tunnel from a port on your local machine to a port on a remote server.
 This means that when you connect to a specific port on your local machine, the connection is forwarded through the SSH tunnel to a specific port on a remote machine.
@@ -130,7 +130,7 @@ ssh -L [local_port]:[remote_host]:[remote_port] [username]@[ssh_server]
 
 [Further reading](https://www.ssh.com/academy/ssh/tunneling-example#local-forwarding)
 
-#### Remote Port Forwarding
+#### 3.3.2. Remote Port Forwarding
 
 You are allowing a remote machine to connect to a port on your local machine.
 This means that when something connects to a port on the remote machine (SSH Server), that connection is tunneled through the SSH connection and is forwarded to a port on your local machine.
@@ -148,7 +148,7 @@ ssh -R [remote_port]:[local_host]:[local_port] [username]@[ssh_server]
 
 [Further reading](https://www.ssh.com/academy/ssh/tunneling-example#remote-forwarding)
 
-## Lab setup
+## 4. Lab setup
 
 To carry out this lab we will create 3 virtual machines (VMs):
 one Telnet client, one Telnet server, and one Adversary-in-the-Middle (AitM) attacker.
@@ -162,14 +162,14 @@ Obviously, you must adapt your setup and use, e.g., other operating systems.
 
 All VMs are set to the network mode _"shared network"_, where traffic is routed directly by the host operating system and the guest shares a VLAN with the host.
 
-### Setup of the Telnet client
+### 4.1. Setup of the Telnet client
 
 ```sh
 sudo apt update
 sudo apt install telnet
 ```
 
-### Setup of the Telnet server
+### 4.2. Setup of the Telnet server
 
 ```sh
 sudo apt update
@@ -214,7 +214,7 @@ Sep 30 11:23:36 kali xinetd[5822]: Server /usr/sbin/in.telnetd is not executable
 
 Make sure the telnetd executable path is correct (i.e. change the config file to have `server          = /usr/sbin/telnetd` if your executable is at `/usr/sbin/telnetd`).
 
-## Adversary-in-the-Middle (AitM) attack / ARP poisoning
+## 5. Adversary-in-the-Middle (AitM) attack / ARP poisoning
 
 On the AitM VM we start by scanning the network to find the IPs of the machines in it.
 
@@ -265,7 +265,7 @@ Thu Nov 1 13:08:02 2023 ［550028］
 [...]
 ```
 
-## Telnet without protection
+## 6. Telnet without protection
 
 Next, stop ettercap on the AitM VM, verify IP Forwarding is still on and run ettercap now with the -o flag set.
 
@@ -316,7 +316,7 @@ sudo tcpdump -i eth0 -w ./packets.pcap
 tcpdump -r ./packets.pcap -A | grep -i "password"
 ```
 
-## Telnet protected with SSH tunnel
+## 7. Telnet protected with SSH tunnel
 
 Let us now show how SSH tunneling adds security to network services, such as Telnet, over an unsecured network.
 
@@ -360,7 +360,7 @@ telnet 192.168.64.4
 
 Capture the packets, filter them using the `telnet` filter and check that once again, you can visualize packets containing the username and password in plain text.
 
-## Conclusion
+## 8. Conclusion
 
 Telnet, an older protocol used for accessing remote servers, operates in plaintext.
 This means that all data, including sensitive information like usernames and passwords, are transmitted over the network without any form of encryption.
