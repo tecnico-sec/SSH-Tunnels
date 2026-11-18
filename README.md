@@ -242,7 +242,7 @@ Next, enable IP forwarding by running the following command on the AitM VM:
 echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
 ```
 
-Now we are ready to use [Ettercap](https://en.wikipedia.org/wiki/Ettercap_(software)) to carry out an [ARP poisoning](https://en.wikipedia.org/wiki/ARP_spoofing) attack effectively allowing for a MitM attack.
+Now we are ready to use [Ettercap](https://en.wikipedia.org/wiki/Ettercap_(software)) to carry out an [ARP poisoning](https://en.wikipedia.org/wiki/ARP_spoofing) attack effectively allowing for a AitM attack.
 
 ```sh
 # pseudo command
@@ -258,7 +258,7 @@ If you then use the Telnet client VM (`192.168.64.2`) to ping the Telnet server 
 # on the Telnet client VM
 ping 192.168.64.4
 
-# on the MitM VM terminal where you ran the ettercap command
+# on the AitM VM terminal where you ran the ettercap command
 [...]
 Thu Nov 1 13:08:02 2023 ［550028］
   192.168.64.2:0 - 192.168.64.4:0| P (0)
@@ -307,7 +307,7 @@ Please notice that, some Telnet implementations send each keystroke as a separat
 Please also notice that, instead of Wireshark, you can do this demonstration using a non-graphical tool such as `tcpdump`.
 
 ```sh
-# on the MitM VM terminal, run before establishing the Telnet connection (CTRL+C to stop)
+# on the AitM VM terminal, run before establishing the Telnet connection (CTRL+C to stop)
 sudo tcpdump -i eth0 -w ./packets.pcap
 
 # establish the Telnet connection between the Telnet client VM and the Telnet server VM as previously shown
